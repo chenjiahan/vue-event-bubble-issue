@@ -1,8 +1,8 @@
 <template>
   <div id="app">
-    <div ref="parent" class="parent" @click="onClickParent">
+    <div ref="parent" class="parent" @touchstart="onTouchStartParent">
       Parent
-      <div ref="child" class="child" @click="onClickChild">Child</div>
+      <div ref="child" class="child" @touchstart="onTouchStartChild">Child</div>
     </div>
 
     <ul>
@@ -24,21 +24,29 @@ export default {
     const ua = navigator.userAgent;
     this.events.push('UserAgent' + ua);
 
-    this.$refs.parent.addEventListener('click', this.onNativeClickParent);
-    this.$refs.child.addEventListener('click', this.onNativeClickChild);
+    this.$refs.parent.addEventListener(
+      'touchstart',
+      this.onNativeTouchStartParent
+    );
+    this.$refs.child.addEventListener(
+      'touchstart',
+      this.onNativeTouchStartChild
+    );
   },
   methods: {
-    onClickParent() {
-      console.log('parent clicked');
-      this.events.push('parent clicked');
+    onTouchStartParent() {
+      console.log('parent touched');
+      this.events.push('parent TouchStarted');
     },
-    onClickChild() {
-      console.log('child clicked');
-      this.events.push('child clicked');
+
+    onTouchStartChild() {
+      console.log('child touched');
+      this.events.push('child TouchStarted');
     },
-    onNativeClickParent(event) {
-      const msg = 'native child clicked: event.timeStamp: ' + event.timeStamp;
-      const msg2 = 'native parent clicked: Date.now: ' + Date.now();
+
+    onNativeTouchStartParent(event) {
+      const msg = 'native child touched: event.timeStamp: ' + event.timeStamp;
+      const msg2 = 'native parent touched: Date.now: ' + Date.now();
 
       console.log(msg);
       console.log(msg2);
@@ -46,9 +54,10 @@ export default {
       this.events.push(msg);
       this.events.push(msg2);
     },
-    onNativeClickChild(event) {
-      const msg = 'native child clicked: event.timeStamp: ' + event.timeStamp;
-      const msg2 = 'native child clicked: Date.now: ' + Date.now();
+
+    onNativeTouchStartChild(event) {
+      const msg = 'native child touched: event.timeStamp: ' + event.timeStamp;
+      const msg2 = 'native child touched: Date.now: ' + Date.now();
 
       console.log(msg);
       console.log(msg2);
